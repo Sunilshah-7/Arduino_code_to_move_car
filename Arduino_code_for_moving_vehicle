@@ -1,0 +1,101 @@
+#define max_speed 255
+#define min_speed 255
+#define mx_speed 255
+#define mn_speed 255
+
+int Left_p = 6;
+int Left_n = 9;
+int Right_p = 2;
+int Right_n = 5;
+int en1 = 10; //right
+int en2 = 11; //left
+void setup() {
+  pinMode(Left_p,OUTPUT);
+  pinMode(Left_n,OUTPUT);
+  pinMode(Right_p,OUTPUT);
+  pinMode(Right_n,OUTPUT);
+  pinMode(en1,OUTPUT);
+  pinMode(en2,OUTPUT);
+  
+  pinMode(4,INPUT);
+  pinMode(7,INPUT);
+  pinMode(8,INPUT);
+  pinMode(12,INPUT);
+  pinMode(13,INPUT);
+}
+
+void loop() {
+ bool sens1 = digitalRead(4);
+ bool sens2 = digitalRead(7);
+ bool sens3 = digitalRead(8);
+ bool sens4 = digitalRead(12);
+ bool sens5 = digitalRead(13);
+  if(sens1 == 0 && sens2 == 0 && sens3 == 1 && sens4 == 0 && sens5 ==0){
+    forward();
+    
+  }
+  else if(sens2== 1)
+  {
+   left();
+  }
+  else if(sens1==1)
+  {
+    Hardleft();
+  }
+  else if(sens4==1)
+  {
+    right();
+  }
+  else if(sens5==1)
+  {
+    Hardright();
+  }
+
+}
+void forward(){
+  analogWrite(en1,255);
+  analogWrite(en2,255);
+  
+  digitalWrite(Left_p,0);
+  digitalWrite(Left_n,1);
+  digitalWrite(Right_p,1);
+  digitalWrite(Right_n,0); 
+
+}
+void Hardleft(){
+  analogWrite(en1,mx_speed);
+  analogWrite(en2,mn_speed);
+  
+  digitalWrite(Left_p,1);
+  digitalWrite(Left_n,0);
+  digitalWrite(Right_p,1);
+  digitalWrite(Right_n,0);
+}
+void Hardright(){
+   analogWrite(en1,mn_speed);
+  analogWrite(en2,mx_speed);
+  
+  digitalWrite(Left_p,0);
+  digitalWrite(Left_n,1);
+  digitalWrite(Right_p,0);
+  digitalWrite(Right_n,1);
+}
+void left(){
+  analogWrite(en1,max_speed);
+  analogWrite(en2,min_speed);
+  
+
+  digitalWrite(Left_p,0);
+  digitalWrite(Left_n,1);
+  digitalWrite(Right_p,1);
+  digitalWrite(Right_n,0);
+}
+void right(){
+  analogWrite(en1,min_speed);
+  analogWrite(en2,max_speed);
+  
+  digitalWrite(Left_p,0);
+  digitalWrite(Left_n,1);
+  digitalWrite(Right_p,1);
+  digitalWrite(Right_n,0);
+}
